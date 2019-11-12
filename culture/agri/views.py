@@ -34,10 +34,11 @@ def sendRegister(request):
     username = postdata['username']
     nom = postdata['nom']
     email = postdata['email']
+    image = postdata['image']
     prenom = postdata['prenom']
     message = postdata['message']
     contact = postdata['contact']
-    print(nom, prenom, email, message, contact)
+    print(nom, prenom, email, image, message, contact)
     
     if password == repeat_pass:
             user = User(
