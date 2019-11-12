@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'agri.apps.AgriConfig',
     'contact.apps.ContactConfig',
     'blog.apps.BlogConfig',
-    'configuration.apps.ConfigurationConfig',
-    'api.apps.ApiConfig',
+    #'configuration.apps.ConfigurationConfig',
+    #'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
