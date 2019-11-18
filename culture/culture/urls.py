@@ -17,14 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from filebrowser.sites import site
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('agri.urls')),
     path('blog/', include('blog.urls')),
     path('contact/', include('contact.urls')),
+    path('tinymce/', include('tinymce.urls')),
+    path('admin/filebrowser/', site.urls),
     # path('configuration/', include('configuration.urls')),
-    # path('api/', include('api.urls')),
+    path('api/', include('api.urls')),
 ]
 
 

@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 
 
-class Categorie(models.Model):
+class Categories(models.Model):
     nom = models.CharField(max_length=250)
     image = models.ImageField(upload_to='images')
     date_add = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -24,7 +24,7 @@ class Produit(models.Model):
     description = models.TextField()
     stock = models.IntegerField()
     descripPanier = models.TextField()
-    categorie = models.ForeignKey("Categorie",on_delete=models.CASCADE, related_name = "CategorieProduit")
+    categorie = models.ForeignKey("Categories",on_delete=models.CASCADE, related_name = "CategorieProduit")
     date_add = models.DateTimeField(auto_now=False, auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True, auto_now_add=False)
     statut = models.BooleanField()
@@ -37,6 +37,7 @@ class Panier(models.Model):
     total = models.IntegerField()
     image = models.ImageField(upload_to='images')
     produit = models.ManyToManyField("Produit")
+    client = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "UserPanier")
     date_add = models.DateTimeField(auto_now=False, auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True, auto_now_add=False)
     statut = models.BooleanField()

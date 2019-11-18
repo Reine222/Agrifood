@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login, logout
+from .models import *
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -26,75 +31,63 @@ def wishlist(request):
 
 
 def register(request):
-    return render(request, 'pages/register.html')
-
-
-def sendRegister(request):
-    postdata = json.loads(request.body.decode('utf-8'))
-    username = postdata['username']
-    nom = postdata['nom']
-    email = postdata['email']
-    image = postdata['image']
-    prenom = postdata['prenom']
-    message = postdata['message']
-    contact = postdata['contact']
-    print(nom, prenom, email, image, message, contact)
-    
-    if password == repeat_pass:
+    if request.method == "POST" :
+        success = False
+        username = request.POST.get('username')
+        nom = request.POST.get('nom')
+        prenom = request.POST.get('prenom')
+        email = request.POST.get('email')
+        image = request.FILES.get('image')
+        contact = request.POST.get('contact')
+        password = request.POST.get('password')
+        repassword = request.POST.get('repassword')
+        print(nom, prenom, email, contact)
+        
+        if password == repassword : 
             user = User(
                 username=username,
-                first_name=nom,
-                last_name=prenom,
+                first_name=prenom,
+                last_name=nom,
                 email=email,
-                
             )
-            try:
+            try :
                 user.save()
-                user.profile.contact=contact
+                print(user)
                 user.profile.image=image
+                user.profile.contact=contact
                 user.profile.save()
-                user.password = password
+                user.password=password
                 user.set_password(user.password)
                 user.save()
-                print('success')
-                succes = True
-                reponse = 'Votre inscription a bien été enregisté '
-                return redirect('login')
+                # prof = Profile(nom=nom, prenom=prenom, email=email, image=image, contact=contact)
+                # prof.save()
+                print('************************* succes ***********************************')
+                success = True
+                response = "votre inscription a ete effectuée avec succes"
+                return redirect('pages/login.html')
             except:
-                print('error')
-                succes = False
-                reponse = "Un probleme survennu lors de l'enregistrement"
+                success = False
+                response = " error, veillez verifier votre connexion "
                 
-            
-            datas = {
-                'succes':succes,
-                'reponse':reponse,
-            }
-    return JsonResponse(datas, safe=False)
+    return render(request, 'pages/register.html')
 
 
 
 def connexion(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print('******************************************************', username, password ,'******************************************************')
+        try:
+            user = authentificate(username=username, password=password)
+            if user is not None and user.is_active :
+                login(request, user)
+                return redirect('pages/index.html')
+        except:
+            return redirect('connexion')
     return render(request, 'pages/login.html')
 
-def connect(request):
-    postdata = json.loads(request.body.decode('utf-8'))
-    username = postdata['username']
-    password = postdata['password']
-    print(username,password)
-    print(user)
-    if user is not None and user.is_active:
-        try : 
-            print("user is login")
-            login(request, user)
-            return redirect('blog')
-        except :
-            print("user is not login")
-            return redirect('connexion')
-    return JsonResponse(datas, safe=False)
 
-
-
-def deconection(request):
+def deconnexion(request):
     logout(request)
-    return redirect('connexion')
+    return redirect(reverse(connexion))

@@ -35,14 +35,14 @@ class Article(models.Model):
 class Commentaire(models.Model):
     image = models.ImageField(upload_to='blog_image')
     date = models.DateTimeField(auto_now=True, auto_now_add=False)
-    nom =models.ForeignKey("Profile", on_delete=models.CASCADE, related_name = "ProfileCommentaire")
+    nom =models.ForeignKey(User, on_delete=models.CASCADE, related_name = "UserCommentaire")
     message = models.TextField()
     article = models.ForeignKey("Article", on_delete=models.CASCADE, related_name = "ArticleCommentaire")
     date_add = models.DateTimeField(auto_now=False, auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True, auto_now_add=False)
     statut = models.BooleanField()
-    def __str__(self):
-        return self.nom
+    # def __str__(self):
+    #     return self.nom
 
 
 class Tag(models.Model):
@@ -62,20 +62,3 @@ class Comment(models.Model):
     message = models.TextField()
     date_add = models.DateTimeField(auto_now=False, auto_now_add=True)
 
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = "profile")
-    # Initialisation a la creation
-    image = models.ImageField(upload_to="profile")
-    email = models.EmailField(max_length=254)
-    contact = models.CharField(max_length=250)
-    
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, created, **kwargs):
-        
-        instance.profile.save()

@@ -24,10 +24,8 @@ urlpatterns = [
     path('product', views.product, name= "product"),
     path('shop', views.shop, name= "shop"),
     path('wishlist', views.wishlist, name= "wishlist"),
-    path('connect', views.connect, name= "login"),
+    path('login', views.connexion, name= "connexion"),
     path('register', views.register, name= "register"),
-    
-    
-    
+    path('deconnexion', views.deconnexion, name= "deconnexion"),
 ]
 
