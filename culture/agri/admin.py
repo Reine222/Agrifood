@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
 # Register your models here.
@@ -38,7 +39,7 @@ class CategoriesAdmin(admin.ModelAdmin):
 
 @admin.register(models.Produit)
 class ProduitAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'prix', 'description', 'stock', 'descripPanier', 'categorie', 'date_add', 'date_upd', 'statut','view_image',)
+    list_display = ('nom', 'prix','description', 'stock', 'descripPanier', 'categorie', 'date_add', 'date_upd', 'statut','view_image',)
     list_filter = ('date_add', 'date_upd', 'statut',)
     list_search = ('nom')
     ordering = ('nom',)
@@ -66,9 +67,9 @@ class ProduitAdmin(admin.ModelAdmin):
 
 @admin.register(models.Panier)
 class PanierAdmin(admin.ModelAdmin):
-    list_display = ('forme', 'quantité', 'total', 'date_add', 'date_upd', 'statut','view_image',)
+    list_display = ('quantité', 'total', 'date_add', 'date_upd', 'statut','view_image',)
     list_filter = ('date_add', 'date_upd', 'statut',)
-    list_search = ('forme')
+    list_search = ('quantité')
     ordering = ('quantité',)
     list_per_page = 5
     filter_horizontal = ('produit',)
@@ -95,11 +96,11 @@ class PanierAdmin(admin.ModelAdmin):
 
 @admin.register(models.Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'email', 'contact', 'image',)
+    list_display = ('user', 'email', 'contact', 'view_image',)
     list_search = ('user')
     ordering = ('user',)
     list_per_page = 5
-    #readonly_fields = ['detail_image']
+    readonly_fields = ['detail_image']
     actions = ('active', 'desactive',) 
     def active(self, queryset, request):
         queryset.update(statut = True)
@@ -110,11 +111,11 @@ class ProfileAdmin(admin.ModelAdmin):
         queryset.update(statut = False)
         self.message_user(request, 'Desactiver un profile')
     desactive.short_description = 'desactive profile'
-    # def view_image(self, obj):
-    #     return mark_safe('<img src = "{url}" width ="100px" height ="100px" />'.format(url = obj.image.url))
+    def view_image(self, obj):
+        return mark_safe('<img src = "{url}" width ="100px" height ="100px" />'.format(url = obj.image.url))
     
-    # def detail_image(self, obj):
-    #     return mark_safe('<img src = "{url}" width ="100px" height ="100px" />'.format(url = obj.image.url))
+    def detail_image(self, obj):
+        return mark_safe('<img src = "{url}" width ="100px" height ="100px" />'.format(url = obj.image.url))
 
 
 

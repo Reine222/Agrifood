@@ -81,6 +81,13 @@ class CommentaireAdmin(admin.ModelAdmin):
 
 
 
+@admin.register(models.Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'email', 'web', 'message', 'date_add',)
+    list_filter = ('date_add',)
+    list_serach = ('nom',)
+    list_per_page = 5
+    ordering = ('nom',)
 
 
 
@@ -91,4 +98,5 @@ class TagAdmin(admin.ModelAdmin):
     list_serach = ('nom')
     list_per_page = 5
     ordering = ('nom',)
+    
     

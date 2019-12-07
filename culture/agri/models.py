@@ -20,6 +20,7 @@ class Categories(models.Model):
 class Produit(models.Model):
     nom = models.CharField(max_length=250)
     image = models.ImageField(upload_to='images')
+    # forme = models.CharField(max_length=50)
     prix = models.IntegerField()
     description = models.TextField()
     stock = models.IntegerField()
@@ -30,13 +31,16 @@ class Produit(models.Model):
     statut = models.BooleanField()
     def __str__(self):
         return self.nom
+    
+
+
 
 class Panier(models.Model):
-    forme = models.CharField(max_length=250)
+    # forme = models.CharField(max_length=250)
     quantité = models.IntegerField()
     total = models.IntegerField()
     image = models.ImageField(upload_to='images')
-    produit = models.ManyToManyField("Produit")
+    produit = models.ManyToManyField("Produit", related_name = "produitPanier")
     client = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "UserPanier")
     date_add = models.DateTimeField(auto_now=False, auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -85,7 +89,7 @@ class Temoignage(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = "profileUser")
     # Initialisation a la creation
-    image = models.ImageField(upload_to="profile")
+    image = models.ImageField(upload_to="profile", blank=True)
     email = models.EmailField(max_length=254)
     contact = models.CharField(max_length=250)
     
@@ -96,5 +100,4 @@ class Profile(models.Model):
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, created, **kwargs):
-        
-        instance.profile.save()
+        instance.profileUser.save()

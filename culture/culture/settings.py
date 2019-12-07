@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
     'agri.apps.AgriConfig',
     'contact.apps.ContactConfig',
     'blog.apps.BlogConfig',
@@ -49,7 +50,9 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
 ]
 
-
+GRAPHENE = {
+    'SCHEMA': 'culture.schema.schema'
+}
 
 
 MIDDLEWARE = [

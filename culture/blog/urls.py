@@ -17,8 +17,10 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('blog', views.blog, name= "blog"),
-    path('single', views.single, name= "single"),
+    path('', views.blog, name= "blog"),
+    #path('single/', views.single, name= "single"),
+    path('single/<int:id>/', views.single, name= "single"),
+    path('comment/', views.sendcomment, name='comment')
     # path('login', views.connexion, name= "connexion"),
     # path('register', views.register, name= "register"),
     # path('deconnexion', views.deconnexion, name= "deconnexion"),

@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        deph = 1
+        depth = 1
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,24 +23,26 @@ class CategorieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categorie
         fields = '__all__'
-        deph = 1
+        depth = 1
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    categorie = CategorieSerializer(many=True, required=False)
+    blog_image = CategorieSerializer(many=True, required=False)
+    UserArticle = UserSerializer(many=True, required=False)
     class Meta:
         model = Article
         fields = '__all__'
-        deph = 1
+        depth = 1
 
 
 
 class CommentaireSerializer(serializers.ModelSerializer):
-    article = ArticleSerializer(many=True, required=False)
+    ArticleCommentaire = ArticleSerializer(many=True, required=False)
+    UserCommentaire = UserSerializer(many=True, required=False)
     class Meta:
         model = Commentaire
         fields = '__all__'
-        deph = 1
+        depth = 2
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,34 +56,36 @@ class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
         fields = '__all__'
-        deph = 1
+        depth = 1
 
 class ProduitSerializer(serializers.ModelSerializer):
-    categorie = CategoriesSerializer(many=True, required=False)
+    CategorieProduit = CategoriesSerializer(many=True, required=False)
     class Meta:
         model = Produit
         fields = '__all__'
 
 
 class PanierSerializer(serializers.ModelSerializer):
-    produit = ProduitSerializer(many=True, required=False)
+    produitPanier = ProduitSerializer(many=True,)
+    UserPanier = UserSerializer(many=True, required=False)
     class Meta:
         model = Panier
         fields = '__all__'
-        deph = 1
+        depth = 1
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=True, required=False)
+    profileUser = UserSerializer(many=True, required=False)
     class Meta:
         model = Profile
         fields = '__all__'
+        depth = 1
 
 
 class TemoignageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Temoignage
         fields = '__all__'
-        deph = 1
+        depth = 1
 
 class FormCommandeSerializer(serializers.ModelSerializer):
     class Meta:

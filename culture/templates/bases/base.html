@@ -29,6 +29,10 @@
         <link rel="stylesheet" href="/static/css/style.css">
     </head>
     <body class="goto-here">
+    <!--Div princi^la de notre app -->
+    <div id="app">
+
+    
             <div class="py-1 bg-primary">
             <div class="container">
                 <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
@@ -50,7 +54,7 @@
                 </div>
             </div>
             </div>
-        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+            <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
             <a class="navbar-brand" href="index.html">Vegefoods</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,9 +67,9 @@
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown04">
-                    <a class="dropdown-item" href="{% url 'shop' %}">Shop</a>
+                    <a class="dropdown-item" href="">Shop</a>
                     <a class="dropdown-item" href="{% url 'wishlist' %}">Wishlist</a>
-                    <a class="dropdown-item" href="{% url 'product' %}">Single Product</a>
+                    <a class="dropdown-item" href="">Single Product</a>
                     <a class="dropdown-item" href="{% url 'cart' %}">Cart</a>
                     <a class="dropdown-item" href="{% url 'checkout' %}">Checkout</a>
                 </div>
@@ -80,10 +84,11 @@
             </div>
         </nav>
         <!-- END nav -->
-
+        <div>
         {% block main %}
         
         {% endblock main %}
+        </div>
         <footer class="ftco-footer ftco-section">
             <div class="container">
                 <div class="row">
@@ -163,7 +168,7 @@
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
-
+</div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="/static/js/popper.min.js"></script>
@@ -180,6 +185,73 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/static/js/google-map.js"></script>
     <script src="/static/js/main.js"></script>
-        
-    </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+           var one = new Vue({
+                    el: '#app',
+                    data () {
+                        return {
+                        arti: {},
+                        articles : [],
+                        categories : [],
+                        commentaires : [],
+                        tags : [],
+                        comments : [],
+                        patrick :"patrick",
+                       }
+                    },
+                    delimiters: ["${", "}"],
+                    mounted () {
+                        this.getData()
+                        // axios(
+                        //     {method: 'get',
+                        //     url: 'http://127.0.0.1:8000/api/article',
+                        //     headers: {
+                        //     'Content-type': 'image/*'
+                        //     }
+                        //     }).then((response)=>{
+                        //         this.articles = response.data;
+                        //         console.log("LISTE DES ARTICLE ")
+                        //         console.log(this.articles)
+                        //         arti = this.articles
+                        // }),
+                        // axios.get('http://127.0.0.1:8000/api/commentaire').then((response)=>{
+                        //         this.commentaires = response.data;
+                        //         console.log(this.commentaires)
+                        // }),
+                        // axios.get('http://127.0.0.1:8000/api/tag').then((response)=>{
+                        //         this.tags = response.data;
+                        //         console.log(this.categories)
+                        // }),
+                        // axios.get('http://127.0.0.1:8000/api/comment').then((response)=>{
+                        //         this.comments = response.data;
+                        //         console.log(this.comments)
+                        // })
+                    },
+                    methods:{
+                        getData:function(){
+                        console.log("bonjour ")
+                        axios.get('http://127.0.0.1:8000/api/categorie',).then((response)=>{
+                                this.categories = response.data;
+                                console.log("liste des categorie ")
+                                console.log(this.categories)
+                                catego = this.categories
+                        }),
+                        },
+                    }
+                    
+            })
+
+
+
+
+
+    </script>
+    
+
+
+</body>
 </html>

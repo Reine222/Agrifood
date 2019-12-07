@@ -21,15 +21,17 @@
                                 <h1>Log In</h1>
                                 </div>
                             </div>
-                            <form methode ='POST' action="">{% csrf_token %}
+                            <form method='POST' action="login">
+                            {% csrf_token %}
+
                                 <div class="row mt-4">
                                     <div class="col">
-                                    <input type="text" name="username" class="form-control" placeholder="Username">
+                                    <input type="text"  name="username" class="form-control" placeholder="Username">
                                     </div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col">
-                                    <input name="password" type="password" class="form-control mb-1" placeholder="Password">
+                                    <input type="password" name="password" class="form-control mb-1" placeholder="Password">
                                     </div>
                                 </div>
                                 <div class="row mt-4">

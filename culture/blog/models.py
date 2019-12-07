@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from tinymce import HTMLField
-
+from agri.models import *
 # Create your models here.
 
 class Categorie(models.Model):
@@ -20,7 +20,7 @@ class Article(models.Model):
     titre = models.CharField(max_length=250)
     date = models.DateField(auto_now=False, auto_now_add=False)
     categorie = models.ForeignKey("Categorie", on_delete=models.CASCADE, related_name = 'CategorieArticle')
-    auteur = models.ForeignKey( User, on_delete=models.CASCADE, related_name = 'UserArticle')
+    auteur = models.ForeignKey( User , on_delete=models.CASCADE, related_name = 'ProfileArticle')
     description = models.TextField()
     content = HTMLField('Content')
     tag = models.ManyToManyField("Tag",related_name ='TagArticle')

@@ -4,10 +4,36 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 
 # Create your views here.
 def home(request):
-    return render(request, 'pages/index.html')
+    catego = Categories.objects.filter(statut=True)[:2]
+    categos = Categories.objects.filter(statut=True)[2:]
+    categoe = Categories.objects.filter(statut=True)
+    product = Produit.objects.filter(statut=True)
+    print(catego)
+    data = {
+        'catego': catego,
+        'categoe': categoe,
+        'categos': categos,
+        'product': product,
+    }
+    return render(request, 'pages/index.html', data)
+
+def element(request, id):
+    elements = Produit.objects.filter(categorie__id= id)
+    # element = Produit.objects.all()
+    # element_list = Produit.objects.filter(statut=True)
+    paginator = Paginator(elements, 4) # Show 25 elements per page
+
+    page = request.GET.get('page')
+    elements = paginator.get_page(page)
+    data = {
+        'elements': elements,
+    }
+    return render(request, 'pages/element.html', {'elements': elements}, data)
 
 def about(request):
     return render(request, 'pages/about.html')
@@ -18,11 +44,23 @@ def cart(request):
 def checkout(request):
     return render(request, 'pages/checkout.html')
 
-def product(request):
-    return render(request, 'pages/prodsingle.html')
+def product(request, id):
+    product = Produit.objects.get(id=id)
+    products = Produit.objects.filter(statut=True)
+    data = {
+        'product': product,
+        'products': products,
+    }
+    return render(request, 'pages/prodsingle.html', data)
 
-def shop(request):
-    return render(request, 'pages/shop.html')
+def shop(request, id):
+    elements = Produit.objects.filter(categorie__id= id)
+    catego = Categories.objects.filter(statut=True)
+    data = {
+        'elements': elements,
+        'catego': catego,
+    }
+    return render(request, 'pages/shop.html', data)
 
 def wishlist(request):
     return render(request, 'pages/wishlist.html')
@@ -53,9 +91,10 @@ def register(request):
             try :
                 user.save()
                 print(user)
-                user.profile.image=image
-                user.profile.contact=contact
-                user.profile.save()
+                user.profileUser.image=image
+                user.profileUser.contact=contact
+                user.profileUser.email=email
+                user.profileUser.save()
                 user.password=password
                 user.set_password(user.password)
                 user.save()
@@ -64,7 +103,7 @@ def register(request):
                 print('************************* succes ***********************************')
                 success = True
                 response = "votre inscription a ete effectuée avec succes"
-                return redirect('pages/login.html')
+                return redirect('connexion')
             except:
                 success = False
                 response = " error, veillez verifier votre connexion "
@@ -77,13 +116,12 @@ def connexion(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print('******************************************************', username, password ,'******************************************************')
-        try:
-            user = authentificate(username=username, password=password)
-            if user is not None and user.is_active :
-                login(request, user)
-                return redirect('pages/index.html')
-        except:
+        print('******************************************************', username, password )
+        user = authenticate(username=username, password=password)
+        if user is not None and user.is_active :
+            login(request, user)
+            return redirect('home')
+        else:
             return redirect('connexion')
     return render(request, 'pages/login.html')
 
