@@ -18,21 +18,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from filebrowser.sites import site
-from graphene_django.views import GraphQLView
-
-from culture.schema import schema
+#from graphene_django.views import GraphQLView
+#from culture.schema import schema
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('graphql/', GraphQLView.as_view(graphiql=True, schema=schema)),
+    #path('graphql/', GraphQLView.as_view(graphiql=True, schema=schema)),
     path('', include('agri.urls')),
     path('blog/', include('blog.urls')),
     path('contact/', include('contact.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('admin/filebrowser/', site.urls),
     # path('configuration/', include('configuration.urls')),
-    path('api/', include('api.urls')),
+    #path('api/', include('api.urls')),
 ]
 
 

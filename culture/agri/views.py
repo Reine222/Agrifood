@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 
 
 # Create your views here.
+
 def home(request):
     catego = Categories.objects.filter(statut=True)[:2]
     categos = Categories.objects.filter(statut=True)[2:]
