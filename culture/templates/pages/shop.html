@@ -54,20 +54,25 @@
     			</div>
 			{% endfor %}
     		</div>
-    		<div class="row mt-5">
-          <div class="col text-center">
-            <div class="block-27">
-              <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
-              </ul>
-            </div>
-          </div>
+    	<div class="row mt-5">
+			<div class="col text-center">
+				<div class="block-27">
+				<div class="pagination">
+					<ul>
+						{% if elements.has_previous %}
+						<li><a href="?page={{ elements.previous_page_number }}">&lt;</a></li>
+						{% endif %}
+
+						<li class="active"><span class="current">{{ elements.number }}</span></li>
+						{% comment %} <li class="active"><span class="current">{{ elements.paginator.num_pages }}</span></li> {% endcomment %}
+						
+						{% if elements.has_next %}
+						<li><a href="?page={{ elements.next_page_number }}">&gt;</a></li>
+						{% endif %}
+					</ul>
+				</div>
+				</div>
+			</div>
         </div>
     	</div>
     </section>

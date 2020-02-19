@@ -113,6 +113,26 @@
     			</div>
 			{% endfor %}
     		</div>
+			<div class="row mt-5">
+			<div class="col text-center">
+				<div class="block-27">
+				<div class="pagination">
+					<ul>
+						{% if products.has_previous %}
+						<li><a href="?page={{ products.previous_page_number }}">&lt;</a></li>
+						{% endif %}
+
+						<li class="active"><span class="current">{{ products.number }}</span></li>
+						{% comment %} <li class="active"><span class="current">{{ products.paginator.num_pages }}</span></li> {% endcomment %}
+						
+						{% if products.has_next %}
+						<li><a href="?page={{ products.next_page_number }}">&gt;</a></li>
+						{% endif %}
+					</ul>
+				</div>
+				</div>
+			</div>
+        </div>
     	</div>
     </section>
 

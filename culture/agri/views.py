@@ -47,6 +47,10 @@ def checkout(request):
 def product(request, id):
     product = Produit.objects.get(id=id)
     products = Produit.objects.filter(statut=True)
+    # paginator = Paginator(products, 4) # Show 25 products per page
+
+    # page = request.GET.get('page')
+    # products = paginator.get_page(page)
     data = {
         'product': product,
         'products': products,
@@ -56,11 +60,15 @@ def product(request, id):
 def shop(request, id):
     elements = Produit.objects.filter(categorie__id= id)
     catego = Categories.objects.filter(statut=True)
+    paginator = Paginator(elements, 4) # Show 25 elements per page
+
+    page = request.GET.get('page')
+    elements = paginator.get_page(page)
     data = {
         'elements': elements,
         'catego': catego,
     }
-    return render(request, 'pages/shop.html', data)
+    return render(request, 'pages/shop.html', {'elements': elements}, data)
 
 def wishlist(request):
     return render(request, 'pages/wishlist.html')
