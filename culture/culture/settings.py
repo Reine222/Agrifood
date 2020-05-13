@@ -31,28 +31,28 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
-    'colorfield',
+    # 'admin_interface',
+    # 'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'graphene_django',
+    # 'graphene_django',
     'agri.apps.AgriConfig',
     'contact.apps.ContactConfig',
     'blog.apps.BlogConfig',
     'tinymce',
     'filebrowser',
-    'rest_framework',
+    # 'rest_framework',
     #'configuration.apps.ConfigurationConfig',
-    'api.apps.ApiConfig',
+    # 'api.apps.ApiConfig',
 ]
 
-GRAPHENE = {
-    'SCHEMA': 'culture.schema.schema'
-}
+# GRAPHENE = {
+#     'SCHEMA': 'culture.schema.schema'
+# }
 
 
 MIDDLEWARE = [
